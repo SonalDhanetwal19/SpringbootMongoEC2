@@ -29,7 +29,7 @@ services:
     stdin_open: true
     tty: true
 
-  volumes:
-    mongodb:
-    .m2:
+volumes:
+  mongodb:
+  .m2:
 
