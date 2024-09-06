@@ -29,6 +29,7 @@ public class MongoCdc implements ApplicationListener<ApplicationReadyEvent> {
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
+        System.out.println("onApplicationEvent called");
         CodecRegistry codecRegistryProvider = fromProviders(PojoCodecProvider.builder().automatic(true).build());
         CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),codecRegistryProvider);
         String uri = mongoDbHost;
@@ -46,6 +47,7 @@ public class MongoCdc implements ApplicationListener<ApplicationReadyEvent> {
             //BsonDocument bsonDocument =  new BsonDocument("_data",bsonValue);
             //List<Bson> aggregationPipeline = Collections.singletonList(match(and(in("operationType", )))
             ChangeStreamIterable<GroceryItem> changeStreamIterable = vehicleUserProfileRevisionHistory.watch();
+            System.out.println("before Stream Iterable");
             changeStreamIterable.forEach((Consumer<ChangeStreamDocument<GroceryItem>>)System.out::println);
         }
     }
