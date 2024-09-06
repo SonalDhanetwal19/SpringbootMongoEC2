@@ -1,0 +1,52 @@
+package com.toyota.tme.cms.mm21.userprofile.CDC;
+
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.*;
+import com.mongodb.client.model.changestream.ChangeStreamDocument;
+import com.phoenix.SpringMongoDBExample.model.GroceryItem;
+import com.toyota.tme.cms.mm21.userprofile.entity.SyncVehicleUserProfileRequestEntity;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
+
+import java.util.function.Consumer;
+
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+
+@Component
+public class MongoCdc implements ApplicationListener<ApplicationReadyEvent> {
+
+    @Value("${spring.data.mongodb.uri}")
+    private String mongoDbHost;
+
+//    @Value("${spring.data.mongodb.database}")
+//    private String collectionName;
+
+    @Override
+    public void onApplicationEvent(ApplicationReadyEvent event) {
+        CodecRegistry codecRegistryProvider = fromProviders(PojoCodecProvider.builder().automatic(true).build());
+        CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),codecRegistryProvider);
+        String uri = mongoDbHost;
+        System.out.println("mongo-db-uri : "+uri);
+        ConnectionString connectionString = new ConnectionString(uri);
+        MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
+                .applyConnectionString(connectionString)
+                .codecRegistry(codecRegistry)
+                .build();
+        try(MongoClient mongoClient = MongoClients.create(mongoClientSettings))
+        {
+            MongoDatabase mongoDatabase = mongoClient.getDatabase(connectionString.getDatabase());
+            MongoCollection<GroceryItem> vehicleUserProfileRevisionHistory = mongoDatabase.getCollection("GroceryItem", GroceryItem.class);
+            //BsonValue bsonValue = new BsonString("RESUME_TOKEN");
+            //BsonDocument bsonDocument =  new BsonDocument("_data",bsonValue);
+            //List<Bson> aggregationPipeline = Collections.singletonList(match(and(in("operationType", )))
+            ChangeStreamIterable<GroceryItem> changeStreamIterable = vehicleUserProfileRevisionHistory.watch();
+            changeStreamIterable.forEach((Consumer<ChangeStreamDocument<GroceryItem>>)System.out::println);
+        }
+    }
+}
