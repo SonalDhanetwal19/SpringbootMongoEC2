@@ -1,11 +1,10 @@
-package com.toyota.tme.cms.mm21.userprofile.CDC;
+package com.phoenix.SpringMongoDBExample.CDC;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.*;
 import com.mongodb.client.model.changestream.ChangeStreamDocument;
 import com.phoenix.SpringMongoDBExample.model.GroceryItem;
-import com.toyota.tme.cms.mm21.userprofile.entity.SyncVehicleUserProfileRequestEntity;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.springframework.beans.factory.annotation.Value;
