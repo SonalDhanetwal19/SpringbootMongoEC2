@@ -59,8 +59,8 @@ public class ChangeStreamProcessor {
 
     public void subscribeToChangeEventMethods()
     {
-        BsonValue bsonValue = new BsonString("RESUME_TOKEN");
-        BsonDocument resumeToken =  new BsonDocument("_data",bsonValue);
+//        BsonValue bsonValue = new BsonString("RESUME_TOKEN");
+//        BsonDocument resumeToken =  new BsonDocument("_data",bsonValue);
         BsonDocument readResumeTokenFromFile = readResumeTokenFromFile();
         Bson match = Aggregates.match(Filters.in("operationType", Arrays.asList("update", "replace", "insert")));
 
@@ -70,10 +70,11 @@ public class ChangeStreamProcessor {
         List<Bson> pipeline = Arrays.asList(match,project);
         ChangeStreamIterable<Document> changeStreamDocuments = mongoCollection.watch(pipeline);
 
-        if(resumeToken!= null)
+        if(readResumeTokenFromFile!= null)
         {
 //            changeStreamDocuments.resumeAfter(resumeToken);
             changeStreamDocuments.resumeAfter(readResumeTokenFromFile);
+//            changeStreamDocuments.resumeAfter(resumeToken);
         }
 
         changeStreamDocuments.fullDocument(FullDocument.UPDATE_LOOKUP).forEach((Consumer<? super ChangeStreamDocument<Document>>) change ->
