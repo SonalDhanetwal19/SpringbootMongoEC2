@@ -30,7 +30,7 @@ public class ChangeStreamProcessor {
     private MongoCollection<Document> mongoCollection;
     private String mongoResumeTokenFile;
 
-    /*@Value("${spring.data.mongodb.uri}")
+    @Value("${spring.data.mongodb.uri}")
     public String connectionString;
 
     @Value("${spring.data.mongodb.database}")
@@ -40,7 +40,7 @@ public class ChangeStreamProcessor {
     public String collectionName;
 
     @Value("${change.events.resumeTokenFile}")
-    public String resumeTokenFile;*/
+    public String resumeTokenFile;
 
     public ChangeStreamProcessor() {
         System.out.println("ChangeStreamProcessor no arg Constructor");
