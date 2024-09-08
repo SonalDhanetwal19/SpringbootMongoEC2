@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class ChangeEventSubscriber implements ApplicationListener {
 
-    @Autowired
-    public ChangeStreamProcessor changeStreamProcessor;
+//    @Autowired
+    public ChangeStreamProcessor changeStreamProcessor =  new ChangeStreamProcessor();
 
 
-    @Autowired
+    /*@Autowired
     public ChangeEventSubscriber() {
         System.out.println("inside ChangeEventSubscriber constructer");
 //        this.changeStreamProcessor = changeStreamProcessor;
-    }
+    }*/
 
 
 //    @Autowired
