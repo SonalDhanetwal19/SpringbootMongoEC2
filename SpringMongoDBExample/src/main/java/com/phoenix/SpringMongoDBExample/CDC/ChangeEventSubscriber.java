@@ -12,6 +12,9 @@ public class ChangeEventSubscriber implements ApplicationListener {
     public ChangeStreamProcessor changeStreamProcessor;
 
 
+    public ChangeEventSubscriber() {
+    }
+
     @Autowired
     public ChangeEventSubscriber(ChangeStreamProcessor changeStreamProcessor) {
         System.out.println("inside ChangeEventSubscriber constructer - changeStreamProcessor "+changeStreamProcessor);
