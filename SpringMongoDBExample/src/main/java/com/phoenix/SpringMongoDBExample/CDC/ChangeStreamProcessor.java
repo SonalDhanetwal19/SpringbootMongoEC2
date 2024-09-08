@@ -44,7 +44,8 @@ public class ChangeStreamProcessor {
 
     public ChangeStreamProcessor() {
         System.out.println("ChangeStreamProcessor no arg Constructor");
-        this.mongoClient = MongoClients.create("mongodb://mongodb:mongodb@GroceryListCluster.mongodb.net/mygrocerylist?authSource=admin");
+//        this.mongoClient = MongoClients.create("mongodb://mongodb:mongodb@GroceryListCluster.mongodb.net/mygrocerylist?authSource=admin");
+        this.mongoClient = MongoClients.create("mongodb://mongodb:mongodb@127.0.0.1:27017/mygrocerylist?authSource=admin");
         this.mongoCollection = mongoClient.getDatabase("mygrocerylist").getCollection("GroceryItem");
         this.mongoResumeTokenFile = "resume_token.txt";
     }

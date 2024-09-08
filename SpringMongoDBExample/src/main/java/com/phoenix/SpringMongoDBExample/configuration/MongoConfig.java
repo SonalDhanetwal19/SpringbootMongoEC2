@@ -27,6 +27,7 @@ public class MongoConfig {
     {
         System.out.println("Mongo Config called for changeStreamProcessor method");
         MongoClient mongoClient = null;
-        return new ChangeStreamProcessor(connectionString, databaseName, collectionName, resumeTokenFile);
+        //return new ChangeStreamProcessor(connectionString, databaseName, collectionName, resumeTokenFile);
+        return new ChangeStreamProcessor();
     }
 }
