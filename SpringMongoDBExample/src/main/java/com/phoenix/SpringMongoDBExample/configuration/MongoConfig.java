@@ -23,9 +23,6 @@ public class MongoConfig {
     @Value("${change.events.resumeTokenFile}")
     private String resumeTokenFile;
 
-    @Autowired
-    public ChangeStreamProcessor changeStreamProcessor;
-
     public ChangeStreamProcessor changeStreamProcessorMethod()
     {
         System.out.println("Mongo Config called for changeStreamProcessor method");

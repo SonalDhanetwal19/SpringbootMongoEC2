@@ -44,14 +44,17 @@ public class ChangeStreamProcessor {
 
     public ChangeStreamProcessor() {
         System.out.println("ChangeStreamProcessor no arg Constructor");
+        this.mongoClient = MongoClients.create("mongodb://mongodb:mongodb@GroceryListCluster.mongodb.net/mygrocerylist?authSource=admin");
+        this.mongoCollection = mongoClient.getDatabase("mygrocerylist").getCollection("GroceryItem");
+        this.mongoResumeTokenFile = "resume_token.txt";
     }
 
-    public ChangeStreamProcessor(String connectionString, String databaseName, String collectionName, String resumeTokenFile){
+    /*public ChangeStreamProcessor(String connectionString, String databaseName, String collectionName, String resumeTokenFile){
         System.out.println("ChangeStreamProcessor parameterized Constructor");
         this.mongoClient = MongoClients.create(connectionString);
         this.mongoCollection = mongoClient.getDatabase(databaseName).getCollection(collectionName);
         this.mongoResumeTokenFile = resumeTokenFile;
-    }
+    }*/
 
     public void subscribeToChangeEventMethods()
     {
