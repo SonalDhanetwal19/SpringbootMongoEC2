@@ -43,9 +43,11 @@ public class ChangeStreamProcessor {
     public String resumeTokenFile;*/
 
     public ChangeStreamProcessor() {
+        System.out.println("ChangeStreamProcessor no arg Constructor");
     }
 
     public ChangeStreamProcessor(String connectionString, String databaseName, String collectionName, String resumeTokenFile){
+        System.out.println("ChangeStreamProcessor parameterized Constructor");
         this.mongoClient = MongoClients.create(connectionString);
         this.mongoCollection = mongoClient.getDatabase(databaseName).getCollection(collectionName);
         this.mongoResumeTokenFile = resumeTokenFile;
