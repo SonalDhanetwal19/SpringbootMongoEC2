@@ -12,6 +12,7 @@ import org.bson.*;
 import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.Arrays;
@@ -22,13 +23,14 @@ import java.util.function.Consumer;
 import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Projections.include;
 
+@Component
 public class ChangeStreamProcessor {
 
     private MongoClient mongoClient;
     private MongoCollection<Document> mongoCollection;
     private String mongoResumeTokenFile;
 
-    @Value("${spring.data.mongodb.uri}")
+    /*@Value("${spring.data.mongodb.uri}")
     public String connectionString;
 
     @Value("${spring.data.mongodb.database}")
@@ -38,7 +40,10 @@ public class ChangeStreamProcessor {
     public String collectionName;
 
     @Value("${change.events.resumeTokenFile}")
-    String resumeTokenFile;
+    public String resumeTokenFile;*/
+
+    public ChangeStreamProcessor() {
+    }
 
     public ChangeStreamProcessor(String connectionString, String databaseName, String collectionName, String resumeTokenFile){
         this.mongoClient = MongoClients.create(connectionString);
@@ -97,7 +102,7 @@ public class ChangeStreamProcessor {
 
     private BsonDocument readResumeTokenFromFile()
     {
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(resumeTokenFile)))
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(mongoResumeTokenFile)))
         {
             String tokenJson = bufferedReader.readLine();
             return BsonDocument.parse(tokenJson);

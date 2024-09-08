@@ -11,6 +11,7 @@ public class ChangeEventSubscriber implements ApplicationListener {
     @Autowired
     public ChangeStreamProcessor changeStreamProcessor;
 
+    @Autowired
     public ChangeEventSubscriber(ChangeStreamProcessor changeStreamProcessor) {
         this.changeStreamProcessor = changeStreamProcessor;
     }
