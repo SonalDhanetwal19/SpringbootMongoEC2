@@ -3,6 +3,7 @@ package com.phoenix.SpringMongoDBExample.configuration;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.model.changestream.ChangeStreamDocument;
 import com.phoenix.SpringMongoDBExample.CDC.ChangeStreamProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,10 @@ public class MongoConfig {
     @Value("${change.events.resumeTokenFile}")
     private String resumeTokenFile;
 
-    public ChangeStreamProcessor changeStreamProcessor()
+    @Autowired
+    public ChangeStreamProcessor changeStreamProcessor;
+
+    public ChangeStreamProcessor changeStreamProcessorMethod()
     {
         System.out.println("Mongo Config called for changeStreamProcessor method");
         MongoClient mongoClient = null;
