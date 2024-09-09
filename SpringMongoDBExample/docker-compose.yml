@@ -35,9 +35,6 @@ services:
       - db2:/data/db
     networks:
       - mongors-network
-    links:
-      - mongo_db1
-      - mongo_db3
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
 
   mongo_db3:
@@ -54,14 +51,11 @@ services:
       - db3:/data/db
     networks:
       - mongors-network
-    links:
-      - mongo_db1
-      - mongo_db2
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
 
   app:
-#    depends_on:
-#      - mongo_db1
+    depends_on:
+      - mongo_db1
     build: .
     restart: on-failure
     env_file: .env
