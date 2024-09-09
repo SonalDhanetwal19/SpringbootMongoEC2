@@ -60,8 +60,8 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
 
   app:
-    depends_on:
-      - mongo_db1
+#    depends_on:
+#      - mongo_db1
     build: .
     restart: on-failure
     env_file: .env
