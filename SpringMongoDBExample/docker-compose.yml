@@ -12,7 +12,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - /mongors/data1:/data/db
+      - mongors/data1:/data/db
       - ./rs-init.sh:/scripts/rs-init.sh
     networks:
       - mongors-network
@@ -32,7 +32,7 @@ services:
     ports:
       - 27018:27017
     volumes:
-      - /mongors/data2:/data/db
+      - mongors/data2:/data/db
     networks:
       - mongors-network
     links:
@@ -51,7 +51,7 @@ services:
     ports:
       - 27019:27017
     volumes:
-      - /mongors/data3:/data/db
+      - mongors/data3:/data/db
     networks:
       - mongors-network
     links:
@@ -77,9 +77,9 @@ services:
       - mongors-network
 
 volumes:
-  /mongors/data1:
-  /mongors/data2:
-  /mongors/data3:
+  mongors/data1:
+  mongors/data2:
+  mongors/data3:
   .m2:
 
 networks:
