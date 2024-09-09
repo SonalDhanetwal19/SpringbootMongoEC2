@@ -62,8 +62,6 @@ services:
   app:
     depends_on:
       - mongo_db1
-      - mongo_db2
-      - mongo_db3
     build: .
     restart: on-failure
     env_file: .env
