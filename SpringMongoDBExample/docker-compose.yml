@@ -1,8 +1,8 @@
+
 version: "3.8"
 
 services:
-  mongo_db1:
-    container_name: mongo_db1
+  mongo_db:
     image: mongo
     restart:  always
     env_file: .env
@@ -10,52 +10,13 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
       - MONGO_INTIDB_ROOT_PASSWORD=$MONGODB_PASSWORD
     ports:
-      - 27017:27017
+      - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
     volumes:
-      - db1:/data/db
-      - ./rs-init.sh:/scripts/rs-init.sh
-    networks:
-      - mongors-network
-    links:
-      - mongo_db2
-      - mongo_db3
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
-
-  mongo_db2:
-    container_name: mongo_db2
-    image: mongo
-    restart:  always
-    env_file: .env
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
-      - MONGO_INTIDB_ROOT_PASSWORD=$MONGODB_PASSWORD
-    ports:
-      - 27018:27017
-    volumes:
-      - db2:/data/db
-    networks:
-      - mongors-network
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
-
-  mongo_db3:
-    container_name: mongo_db3
-    image: mongo
-    restart:  always
-    env_file: .env
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
-      - MONGO_INTIDB_ROOT_PASSWORD=$MONGODB_PASSWORD
-    ports:
-      - 27019:27017
-    volumes:
-      - db3:/data/db
-    networks:
-      - mongors-network
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
+      - mongodb:/data/db
 
   app:
     depends_on:
-      - mongo_db1
+      - mongo_db
     build: .
     restart: on-failure
     env_file: .env
@@ -67,16 +28,8 @@ services:
       - .m2:/root/.m2
     stdin_open: true
     tty: true
-    networks:
-      - mongors-network
 
 volumes:
-  db1:
-  db2:
-  db3:
+  mongodb:
   .m2:
-
-networks:
-  mongors-network:
-    driver: bridge
 
