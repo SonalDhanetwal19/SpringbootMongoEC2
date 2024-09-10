@@ -1,9 +1,9 @@
 package com.phoenix.SpringMongoDBExample;
 
+import com.phoenix.SpringMongoDBExample.CDC.MongoCDC;
 import com.phoenix.SpringMongoDBExample.Repository.ItemRepository;
 import com.phoenix.SpringMongoDBExample.model.GroceryItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -22,7 +22,10 @@ public class SpringMongoDbExampleApplication {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(SpringMongoDbExampleApplication.class, args);
+		//SpringApplication.run(SpringMongoDbExampleApplication.class, args);
+		SpringApplication application = new SpringApplication(SpringMongoDbExampleApplication.class);
+		application.addListeners(new MongoCDC());
+		application.run(args);
 	}
 
 //	@Override

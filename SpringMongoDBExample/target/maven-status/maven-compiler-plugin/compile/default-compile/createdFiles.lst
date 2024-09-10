@@ -1,5 +1,6 @@
 com\phoenix\SpringMongoDBExample\Repository\ItemRepository.class
 com\phoenix\SpringMongoDBExample\Service\GroceryItemService.class
+com\phoenix\SpringMongoDBExample\CDC\MongoCDC.class
 com\phoenix\SpringMongoDBExample\Repository\CustomRepositoryImpl.class
 com\phoenix\SpringMongoDBExample\SpringMongoDbExampleApplication.class
 com\phoenix\SpringMongoDBExample\Controller\GroceryItemController.class
