@@ -5,7 +5,9 @@ import com.phoenix.SpringMongoDBExample.Repository.ItemRepository;
 import com.phoenix.SpringMongoDBExample.model.GroceryItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableMongoRepositories
+@EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
 public class SpringMongoDbExampleApplication {
 
 	@Autowired
