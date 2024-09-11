@@ -46,7 +46,7 @@ public class MongoCDC implements ApplicationListener<ApplicationReadyEvent> {
         CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),codecRegistryProvider);
 //        String uri = mongoDbHost;
 //        String uri = "mongodb://root:rootpassword@mongo_db:27017/mygrocerylist?authSource=admin";
-        String uri = "mongodb://root:rootpassword@127.0.0.1:27017/?directConnection=true";
+        String uri = "mongodb://root:rootpassword@127.0.0.1:27017/mygrocerylist?directConnection=true";
         System.out.println("mongo-db-uri : "+uri);
         ConnectionString connectionString = new ConnectionString(uri);
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
