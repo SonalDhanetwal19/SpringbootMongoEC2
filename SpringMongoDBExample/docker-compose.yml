@@ -5,7 +5,7 @@ services:
   mongo_db:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_mongo
     image: mongo
     container_name: mongodb-replicaset
     command: "--bind_ip_all --replSet rs01 --keyFile /etc/mongo-keyfile --port 27017"
