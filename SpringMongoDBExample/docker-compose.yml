@@ -3,15 +3,19 @@ version: "3.8"
 
 services:
   mongo_db:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: mongo
-    command: "mongo_db --bind_ip_all --replSet rs01 --keyFile /data/replica.key"
+    container_name: mongodb-replicaset
+    command: "--bind_ip_all --replSet rs01 --keyFile /etc/mongo-keyfile --port 27017"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:
-      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'host.docker.internal:27017'}]}) }" | mongosh --port 27017 --quiet
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'host.docker.internal:27017'}]}) }" | mongosh --port 27017 -u root -p rootpassword --authenticationDatabase admin
       interval: 5s
       timeout: 30s
-      start_period: 0s
+      start_period: 15s
       start_interval: 1s
       retries: 30
     restart:  always
@@ -23,16 +27,16 @@ services:
       - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
     volumes:
       - mongodb:/data/db
-      - $PWD/.docker/mongo/replica.key:/data/replica.key.devel
-      - $PWD/.docker/mongo/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
-    entrypoint:
-      - bash
-      - -c
-      - |
-        cp /data/replicaset.key.devel /data/replicaset.key
-        chmod 400 /data/replica.key
-        chown 999:999 /data/replica.key
-        exec docker-entrypoint.sh $$@
+#      - $PWD/.docker/mongo/replica.key:/data/replica.key.devel
+#      - $PWD/.docker/mongo/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
+#    entrypoint:
+#      - bash
+#      - -c
+#      - |
+#        cp /data/replicaset.key.devel /data/replicaset.key
+#        chmod 400 /data/replica.key
+#        chown 999:999 /data/replica.key
+#        exec docker-entrypoint.sh $$@
 
   app:
     depends_on:
