@@ -18,10 +18,10 @@ import java.util.List;
 @EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
 public class SpringMongoDbExampleApplication {
 
-	@Autowired
-	ItemRepository itemRepository;
-
-	List<GroceryItem> groceryItemList = new ArrayList<GroceryItem>();
+//	@Autowired
+//	ItemRepository itemRepository;
+//
+//	List<GroceryItem> groceryItemList = new ArrayList<GroceryItem>();
 
 	public static void main(String[] args) {
 
