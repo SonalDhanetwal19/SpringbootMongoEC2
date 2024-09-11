@@ -16,11 +16,9 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableMongoRepositories
-@EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
+//@EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
 public class SpringMongoDbExampleApplication {
 
-	@Autowired
-	MongoTemplate mongoTemplate;
 //	@Autowired
 //	ItemRepository itemRepository;
 //
