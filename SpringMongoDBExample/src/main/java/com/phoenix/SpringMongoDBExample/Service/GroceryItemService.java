@@ -1,7 +1,6 @@
 package com.phoenix.SpringMongoDBExample.Service;
 
 import com.phoenix.SpringMongoDBExample.Repository.CustomRepository;
-import com.phoenix.SpringMongoDBExample.Repository.CustomRepositoryImpl;
 import com.phoenix.SpringMongoDBExample.Repository.ItemRepository;
 import com.phoenix.SpringMongoDBExample.model.GroceryItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,6 +21,19 @@ public class GroceryItemService {
 
     @Autowired
     CustomRepository customRepository;
+
+//    @Autowired
+//    GroceryItem groceryItemGlobal;
+
+    @Autowired
+    SequenceGeneratorService sequenceGeneratorService;
+
+//    public GroceryItemService(ItemRepository itemRepository, CustomRepository customRepository, GroceryItem groceryItemGlobal, SequenceGeneratorService sequenceGeneratorService) {
+//        this.itemRepository = itemRepository;
+//        this.customRepository = customRepository;
+//        this.groceryItemGlobal = groceryItemGlobal;
+//        this.sequenceGeneratorService = sequenceGeneratorService;
+//    }
 
     public HttpStatus createGroceryItems(GroceryItem groceryItem)
     {
@@ -33,7 +46,13 @@ public class GroceryItemService {
 //            itemRepository.save(new GroceryItem(4, "ice tea", 7, "Beverages"));
 //            itemRepository.save(new GroceryItem(5, "mexican burger", 10, "Burgers"));
 //            itemRepository.save(new GroceryItem(6, "Americano Burger", 20, "Burgers"));
-            itemRepository.save(groceryItem);
+            GroceryItem groceryItemGlobal =  new GroceryItem();
+           // groceryItemGlobal.setId((int) sequenceGeneratorService.sequenceGeneratorService(GroceryItem.SEQUENCE_NAME));
+            groceryItemGlobal.setItemId(groceryItem.getItemId());
+            groceryItemGlobal.setCategory(groceryItem.getCategory());
+            groceryItemGlobal.setQuantity(groceryItem.getQuantity());
+            groceryItemGlobal.setItemName(groceryItem.getItemName());
+            itemRepository.save(groceryItemGlobal);
             return HttpStatus.CREATED;
         }
         catch (Exception e)
@@ -112,6 +131,37 @@ public class GroceryItemService {
     public String updateItemQuantity(String itemName, int newQuantity)
     {
         return customRepository.updateQuantity(itemName, newQuantity);
+    }
+
+    public ResponseEntity<String> replaceGroceryDetails(int itemNumber, GroceryItem groceryItem)
+    {
+        String result = null;
+        Optional<GroceryItem> existingItem = itemRepository.findById(itemNumber);
+        if(!Objects.isNull(existingItem))
+        {
+            //result = customRepository.replaceGrocery(itemNumber,groceryItem);
+
+        }
+        ResponseEntity responseEntity = new ResponseEntity<>(result,HttpStatus.OK);
+        if(result == "document updated")
+        return new ResponseEntity<>(result,HttpStatus.OK);
+        else return ResponseEntity.internalServerError().body("Error while replacing the document");
+    }
+
+    public ResponseEntity<String> replaceGroceryDetailsByItemName(String itemName, GroceryItem groceryItem)
+    {
+        System.out.println("entered service - replaceGroceryDetailsByItemName");
+        String result = null;
+        //Optional<GroceryItem> existingItem = itemRepository.findById(itemNumber);
+        //if(!Objects.isNull(existingItem))
+        //{
+            result = customRepository.replaceGrocery(itemName,groceryItem);
+
+        //}
+        ResponseEntity responseEntity = new ResponseEntity<>(result,HttpStatus.OK);
+        if(result == "document updated")
+            return new ResponseEntity<>(result,HttpStatus.OK);
+        else return ResponseEntity.internalServerError().body("Error while replacing the document");
     }
 
 

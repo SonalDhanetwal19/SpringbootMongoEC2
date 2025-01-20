@@ -1,18 +1,8 @@
 package com.phoenix.SpringMongoDBExample;
 
-import com.phoenix.SpringMongoDBExample.CDC.MongoCDC;
-import com.phoenix.SpringMongoDBExample.Repository.ItemRepository;
-import com.phoenix.SpringMongoDBExample.model.GroceryItem;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 @EnableMongoRepositories
@@ -20,15 +10,27 @@ import java.util.List;
 public class SpringMongoDbExampleApplication {
 
 //	@Autowired
+//	private static HistoryMongoTemplateRepository historyMongoTemplateRepository;
+
+//	@Autowired
+//	private static GroceryHistoryAudit groceryHistoryAudit;
+
+//	@Autowired
+//	private static GroceryHistoryAuditService groceryHistoryAuditService;
+
+//	@Autowired
 //	ItemRepository itemRepository;
 //
 //	List<GroceryItem> groceryItemList = new ArrayList<GroceryItem>();
+
 
 	public static void main(String[] args) {
 
 		//SpringApplication.run(SpringMongoDbExampleApplication.class, args);
 		SpringApplication application = new SpringApplication(SpringMongoDbExampleApplication.class);
-		application.addListeners(new MongoCDC());
+		//application.addListeners(new MongoCDC(groceryHistoryAuditService));
+//		application.addListeners(new MongoCDC());
+				//,groceryHistoryAudit));
 		application.run(args);
 	}
 

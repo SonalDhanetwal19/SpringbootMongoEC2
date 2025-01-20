@@ -1,8 +1,15 @@
-com\phoenix\SpringMongoDBExample\Repository\ItemRepository.class
+com\phoenix\SpringMongoDBExample\Repository\HistoryMongoTemplateRepository.class
 com\phoenix\SpringMongoDBExample\Service\GroceryItemService.class
+com\phoenix\SpringMongoDBExample\model\GroceryHistoryAudit.class
+com\phoenix\SpringMongoDBExample\Repository\HistoryMongoTemplateRepositoryImpl.class
+com\phoenix\SpringMongoDBExample\Repository\CustomRepository.class
+com\phoenix\SpringMongoDBExample\Repository\HistoryRepository.class
+com\phoenix\SpringMongoDBExample\Repository\ItemRepository.class
 com\phoenix\SpringMongoDBExample\CDC\MongoCDC.class
+com\phoenix\SpringMongoDBExample\model\MongoSequenceGenerator.class
 com\phoenix\SpringMongoDBExample\Repository\CustomRepositoryImpl.class
+com\phoenix\SpringMongoDBExample\Service\SequenceGeneratorService.class
+com\phoenix\SpringMongoDBExample\Service\GroceryHistoryAuditService.class
 com\phoenix\SpringMongoDBExample\SpringMongoDbExampleApplication.class
 com\phoenix\SpringMongoDBExample\Controller\GroceryItemController.class
-com\phoenix\SpringMongoDBExample\Repository\CustomRepository.class
 com\phoenix\SpringMongoDBExample\model\GroceryItem.class

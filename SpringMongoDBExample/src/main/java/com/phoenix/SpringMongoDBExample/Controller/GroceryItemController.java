@@ -18,6 +18,11 @@ public class GroceryItemController {
     @Autowired
     GroceryItemService groceryItemService;
 
+    @GetMapping("/ping")
+    public String pingMethod()
+    {
+        return("Hi from Ping");
+    }
     //1. Create grocery items
     @PostMapping("/groceryItems")
     public HttpStatus createGroceryItems(@RequestBody GroceryItem groceryItem)
@@ -95,8 +100,23 @@ public class GroceryItemController {
     @PutMapping("/groceryItems/quantity/{itemName}")
     public String updateItemQuantity(@PathVariable("itemName") String itemName, @RequestParam int quantity)
     {
+
         return groceryItemService.updateItemQuantity(itemName,quantity);
 
+    }
+
+    //9. Update updateGroceryDetails using MongoCDC
+    @PutMapping("/groceryItems/replaceItem/{itemNumber}")
+    public ResponseEntity<String> replaceGroceryDetails(@PathVariable("itemNumber") int itemNumber, @RequestBody GroceryItem groceryItem)
+    {
+        return groceryItemService.replaceGroceryDetails(itemNumber, groceryItem);
+    }
+
+    @PutMapping("/groceryItems/replaceItemName/{itemName}")
+    public ResponseEntity<String> replaceGroceryDetailsByItemName(@PathVariable("itemName") String itemName, @RequestBody GroceryItem groceryItem)
+    {
+        System.out.println("entered controller");
+        return groceryItemService.replaceGroceryDetailsByItemName(itemName, groceryItem);
     }
 
 }

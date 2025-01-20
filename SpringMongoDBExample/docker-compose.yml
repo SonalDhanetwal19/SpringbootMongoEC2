@@ -1,59 +1,59 @@
-
-version: "3.8"
-
-services:
-  mongo_db:
-    build:
-      context: .
-      dockerfile: Dockerfile_mongo
-    image: mongo
-    container_name: mongodb-replicaset
-    command: "--bind_ip_all --replSet rs01 --keyFile /etc/mongo-keyfile --port 27017"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    healthcheck:
-      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'host.docker.internal:27017'}]}) }" | mongosh --port 27017 -u root -p rootpassword --authenticationDatabase admin
-      interval: 5s
-      timeout: 30s
-      start_period: 15s
-      start_interval: 1s
-      retries: 30
-    restart:  always
-    env_file: .env
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
-      - MONGO_INTIDB_ROOT_PASSWORD=$MONGODB_PASSWORD
-    ports:
-      - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
-    volumes:
-      - mongodb:/data/db
-#      - $PWD/.docker/mongo/replica.key:/data/replica.key.devel
-#      - $PWD/.docker/mongo/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
-#    entrypoint:
-#      - bash
-#      - -c
-#      - |
-#        cp /data/replicaset.key.devel /data/replicaset.key
-#        chmod 400 /data/replica.key
-#        chown 999:999 /data/replica.key
-#        exec docker-entrypoint.sh $$@
-
-  app:
-    depends_on:
-      - mongo_db
-    build: .
-    restart: on-failure
-    env_file: .env
-    ports:
-      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
-    environment:
-      SPRING_APPLICATION_JSON: '{"spring.data.mongodb.uri" : "mongodb://$MONGODB_USER:$MONGODB_PASSWORD@mongo_db:$MONGODB_DOCKER_PORT/$MONGODB_DATABASE?authSource=admin"}'
-    volumes:
-      - .m2:/root/.m2
-    stdin_open: true
-    tty: true
-
-volumes:
-  mongodb:
-  .m2:
-
+#
+#version: "3.8"
+#
+#services:
+#  mongo_db:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile_mongo
+#    image: mongo
+#    container_name: mongodb-replicaset
+#    command: "--bind_ip_all --replSet rs01 --keyFile /etc/mongo-keyfile --port 27017"
+#    extra_hosts:
+#      - "host.docker.internal:host-gateway"
+#    healthcheck:
+#      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'host.docker.internal:27017'}]}) }" | mongosh --port 27017 -u root -p rootpassword --authenticationDatabase admin
+#      interval: 5s
+#      timeout: 30s
+#      start_period: 15s
+#      start_interval: 1s
+#      retries: 30
+#    restart:  always
+#    env_file: .env
+#    environment:
+#      - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
+#      - MONGO_INTIDB_ROOT_PASSWORD=$MONGODB_PASSWORD
+#    ports:
+#      - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
+#    volumes:
+#      - mongodb:/data/db
+##      - $PWD/.docker/mongo/replica.key:/data/replica.key.devel
+##      - $PWD/.docker/mongo/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
+##    entrypoint:
+##      - bash
+##      - -c
+##      - |
+##        cp /data/replicaset.key.devel /data/replicaset.key
+##        chmod 400 /data/replica.key
+##        chown 999:999 /data/replica.key
+##        exec docker-entrypoint.sh $$@
+#
+#  app:
+#    depends_on:
+#      - mongo_db
+#    build: .
+#    restart: on-failure
+#    env_file: .env
+#    ports:
+#      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+#    environment:
+#      SPRING_APPLICATION_JSON: '{"spring.data.mongodb.uri" : "mongodb://$MONGODB_USER:$MONGODB_PASSWORD@mongo_db:$MONGODB_DOCKER_PORT/$MONGODB_DATABASE?authSource=admin"}'
+#    volumes:
+#      - .m2:/root/.m2
+#    stdin_open: true
+#    tty: true
+#
+#volumes:
+#  mongodb:
+#  .m2:
+#

@@ -42,12 +42,13 @@
 //    @Value("${change.events.resumeTokenFile}")
 //    public String resumeTokenFile;
 //
-//    public ChangeStreamProcessor() {
+//    public ChangeStreamProcessor(String connectionString,String databaseName,String collectionName, String resumeTokenFile){
 //        System.out.println("ChangeStreamProcessor no arg Constructor");
 ////        this.mongoClient = MongoClients.create("mongodb://mongodb:mongodb@GroceryListCluster.mongodb.net/mygrocerylist?authSource=admin");
-//        this.mongoClient = MongoClients.create("mongodb://root:rootpassword@mongo_db:27017/mygrocerylist?authSource=admin");
-//        this.mongoCollection = mongoClient.getDatabase("mygrocerylist").getCollection("GroceryItem");
-//        this.mongoResumeTokenFile = "resume_token.txt";
+//        //this.mongoClient = MongoClients.create("mongodb+srv://Sonal:SonalFirst19@cluster0.xfonvzt.mongodb.net/mygrocerylist?authSource=admin");
+//        this.mongoClient =MongoClients.create(connectionString);
+//        this.mongoCollection = mongoClient.getDatabase(databaseName).getCollection(collectionName);
+//        this.mongoResumeTokenFile = resumeTokenFile;
 //    }
 //
 //    /*public ChangeStreamProcessor(String connectionString, String databaseName, String collectionName, String resumeTokenFile){
@@ -61,7 +62,7 @@
 //    {
 ////        BsonValue bsonValue = new BsonString("RESUME_TOKEN");
 ////        BsonDocument resumeToken =  new BsonDocument("_data",bsonValue);
-//        BsonDocument readResumeTokenFromFile = readResumeTokenFromFile();
+//        //BsonDocument readResumeTokenFromFile = readResumeTokenFromFile();
 //        Bson match = Aggregates.match(Filters.in("operationType", Arrays.asList("update", "replace", "insert")));
 //
 //        // Pick the field you are most interested in
@@ -70,19 +71,21 @@
 //        List<Bson> pipeline = Arrays.asList(match,project);
 //        ChangeStreamIterable<Document> changeStreamDocuments = mongoCollection.watch(pipeline);
 //
-//        if(readResumeTokenFromFile!= null)
+//     /*   if(readResumeTokenFromFile!= null)
 //        {
 ////            changeStreamDocuments.resumeAfter(resumeToken);
 //            changeStreamDocuments.resumeAfter(readResumeTokenFromFile);
 ////            changeStreamDocuments.resumeAfter(resumeToken);
 //        }
 //
+//      */
+//
 //        changeStreamDocuments.fullDocument(FullDocument.UPDATE_LOOKUP).forEach((Consumer<? super ChangeStreamDocument<Document>>) change ->
 //        {
 //            Document document = change.getFullDocument();
 //            assert document != null;
 //            saveDocumentToFile(document);
-//            saveResumeTokenToFile(change.getResumeToken());
+//            //saveResumeTokenToFile(change.getResumeToken());
 //        });
 //    }
 //

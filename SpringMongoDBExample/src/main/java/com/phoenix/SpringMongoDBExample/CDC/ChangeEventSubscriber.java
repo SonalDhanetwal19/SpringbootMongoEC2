@@ -3,31 +3,24 @@
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.ApplicationEvent;
 //import org.springframework.context.ApplicationListener;
+//import org.springframework.context.annotation.Configuration;
 //import org.springframework.stereotype.Component;
+//
 //
 //@Component
 //public class ChangeEventSubscriber implements ApplicationListener {
 //
-////    @Autowired
-//    public ChangeStreamProcessor changeStreamProcessor =  new ChangeStreamProcessor();
 //
+//    public final ChangeStreamProcessorNew changeStreamProcessorNew;
 //
-//    /*@Autowired
-//    public ChangeEventSubscriber() {
-//        System.out.println("inside ChangeEventSubscriber constructer");
-////        this.changeStreamProcessor = changeStreamProcessor;
-//    }*/
-//
-//
-////    @Autowired
-////    public ChangeEventSubscriber(ChangeStreamProcessor changeStreamProcessor) {
-////        System.out.println("inside ChangeEventSubscriber constructer - changeStreamProcessor "+changeStreamProcessor);
-////        this.changeStreamProcessor = changeStreamProcessor;
-////    }
+//    @Autowired
+//    public ChangeEventSubscriber(ChangeStreamProcessorNew changeStreamProcessorNew) {
+//        this.changeStreamProcessorNew = changeStreamProcessorNew;
+//    }
 //
 //    @Override
 //    public void onApplicationEvent(ApplicationEvent event) {
 //        System.out.println("inside onApplicationEvent");
-//        changeStreamProcessor.subscribeToChangeEventMethods();
+//        changeStreamProcessorNew.subscribeToChangeEventMethods();
 //    }
 //}
